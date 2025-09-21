@@ -1,0 +1,5 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+public class LandingPage {
+
+}

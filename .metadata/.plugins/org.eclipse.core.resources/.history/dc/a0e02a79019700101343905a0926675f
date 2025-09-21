@@ -1,0 +1,38 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class ProductCatalogue {
+
+	// Create a constructor to declare and initialize driver
+	WebDriver driver;
+
+	public ProductCatalogue(WebDriver driver)
+
+	{
+		this.driver = driver;
+		PageFactory.initElements(driver, this); // This will initialize the driver and get the locator
+	}
+
+	// PageFactory Pattern to Login
+	List<WebElement> productList = driver.findElements(By.cssSelector(".mb-3"));
+	@FindBy(css = ".mb-3")
+	List<WebElement> productList;
+
+	
+	
+	//Action Method for login page
+	public void loginApp(String username, String password)
+	{
+		userEmail.sendKeys(username);
+		userPassword.sendKeys(password);
+		loginBtn.click();
+	}
+
+}

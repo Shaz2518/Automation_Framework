@@ -1,0 +1,17 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+import org.openqa.selenium.By;
+
+public class LandingPage {
+	
+	public LandingPage(WebDriver driver)
+	
+	{
+		this.driver = driver;
+	}
+	//Fill and Submit Login Form
+			driver.findElement(By.id("userEmail")).sendKeys("shaikh.shaziya@gmail.com");
+			driver.findElement(By.id("userPassword")).sendKeys("Shaz@2518");
+			driver.findElement(By.id("login")).click();
+
+}
