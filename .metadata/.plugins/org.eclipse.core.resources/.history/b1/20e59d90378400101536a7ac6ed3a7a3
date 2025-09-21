@@ -1,0 +1,70 @@
+package Locators;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class Locators_Practice {
+
+	public static void main(String[] args) throws InterruptedException {
+		
+		//Invoke Browser
+		System.setProperty("webdriver.driver.chrome", "/Users/localadminuser/Documents/Drivers/chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		
+		//Navigate to webpage
+		driver.manage().window().maximize();
+		driver.get("https://rahulshettyacademy.com/locatorspractice/");
+		
+		//Fill Login Page --> Locators - id, name, classname
+		driver.findElement(By.id("inputUsername")).sendKeys("shaziya");
+		driver.findElement(By.name("inputPassword")).sendKeys("shaziya");
+		driver.findElement(By.id("chkboxOne")).click();
+		driver.findElement(By.name("chkboxTwo")).click();
+		driver.findElement(By.className("signInBtn")).click();
+		
+		Thread.sleep(1000);
+		System.out.println(driver.findElement(By.cssSelector("p.error")).getText());
+		
+		//Forgot Password Form
+		driver.findElement(By.linkText("Forgot your password?")).click();
+		
+		driver.findElement(By.cssSelector("input[type='text']")).sendKeys("shaziya");
+		driver.findElement(By.xpath("//input[@placeholder='Email']")).sendKeys("abc@gmail.com");
+		driver.findElement(By.xpath("//input[@placeholder='Phone Number']")).sendKeys("123456");
+		
+		driver.findElement(By.cssSelector("button[class='reset-pwd-btn']")).click();
+		
+		//Extract Password -- Please use temporary password 'rahulshettyacademy' to Login.
+		String passwordText = driver.findElement(By.cssSelector("p.infoMsg")).getText();
+		String[] password_1 = passwordText.split("'");
+		String half = password_1[1];
+		String[] secondHalf = half.split("'");
+		String passwordFinal = secondHalf[0];
+		System.out.println(passwordFinal);
+				
+		
+		//Fill in the correct details in form
+		driver.findElement(By.xpath("//button[@class='go-to-login-btn']")).click();
+		
+		driver.findElement(By.cssSelector("input[placeholder='Username']")).sendKeys("shaziya");
+		
+		
+		
+		driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys(passwordFinal);
+		Thread.sleep(1000);
+		driver.findElement(By.className("signInBtn")).click();
+		driver.findElement(By.cssSelector("button[type='submit']")).click();
+		
+		//Extract Text and Logout.
+		Thread.sleep(1000);
+		System.out.println(driver.findElement(By.tagName("p")).getText());
+		String display = driver.findElement(By.tagName("p")).getText();
+		Assert.assertEquals(display, "You are successfully logged in.");
+		
+		Thread.sleep(1000);
+		driver.findElement(By.xpath("//button[text()='Log Out']")).click();
+		driver.close();
+	}
+
+}

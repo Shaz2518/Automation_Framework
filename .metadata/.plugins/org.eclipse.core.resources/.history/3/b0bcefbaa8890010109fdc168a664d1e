@@ -1,0 +1,26 @@
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
+
+public class EdgeTest {
+	
+	@Test
+	public static void HomePage() throws MalformedURLException, URISyntaxException
+	{
+		DesiredCapabilities caps = new DesiredCapabilities();
+		
+		caps.setCapability(CapabilityType.BROWSER_NAME, "msedge");
+		WebDriver driver = new RemoteWebDriver(new URI("http://172.31.170.17:4444").toURL(), caps);
+		
+		driver.get("https://www.google.com");
+		System.out.println(driver.getTitle());
+		driver.close();
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;NumberBased_Programs&apos; to &apos;numberBased_Programs&apos;&#x0D;&#x0A;- Original project: &apos;Java_Programs_Practice&apos;&#x0D;&#x0A;- Original element: &apos;Java_Programs_Practice/src/NumberBased_Programs&apos;&#x0D;&#x0A;- Renamed element: &apos;Java_Programs_Practice/src/numberBased_Programs&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;NumberBased_Programs&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src&lt;NumberBased_Programs" name="numberBased_Programs" qualified="false" references="true" stamp="1756399762266" textual="false" version="1.0"/>
+</session>

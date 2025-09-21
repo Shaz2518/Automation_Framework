@@ -1,0 +1,10 @@
+package seleniumAutomation.Selenium_FrameworkDesign;
+
+public class StandaloneTests {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

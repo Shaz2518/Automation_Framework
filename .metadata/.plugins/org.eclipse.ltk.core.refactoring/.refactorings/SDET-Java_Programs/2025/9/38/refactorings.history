@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;SDET_QA&apos; to &apos;sdet_qa&apos;&#x0D;&#x0A;- Original project: &apos;SDET-Java_Programs&apos;&#x0D;&#x0A;- Original element: &apos;SDET-Java_Programs/SDET_QA&apos;&#x0D;&#x0A;- Renamed element: &apos;SDET-Java_Programs/sdet_qa&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;SDET_QA&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/&lt;SDET_QA" name="sdet_qa" qualified="false" references="true" stamp="1758032786630" textual="false" version="1.0"/>
+</session>
