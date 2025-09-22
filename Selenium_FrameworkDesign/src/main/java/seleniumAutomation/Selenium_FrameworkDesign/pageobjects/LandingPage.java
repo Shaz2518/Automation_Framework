@@ -5,7 +5,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage {
+import seleniumAutomation.Selenium_FrameworkDesign.AbstractComponents.AbstractComponents;
+
+public class LandingPage extends AbstractComponents {
 
 	// Create a constructor to declare and initialize driver
 	WebDriver driver;
@@ -13,6 +15,7 @@ public class LandingPage {
 	public LandingPage(WebDriver driver)
 
 	{
+		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this); // This will initialize the driver and get the locator
 	}
@@ -26,18 +29,20 @@ public class LandingPage {
 
 	@FindBy(id = "login")
 	WebElement loginBtn;
-	
-	//Action Method for login page
-	public void loginApp(String username, String password)
-	{
+
+	// Action Method for login page
+	public ProductCatalogue loginApp(String username, String password) {
 		userEmail.sendKeys(username);
 		userPassword.sendKeys(password);
 		loginBtn.click();
+		ProductCatalogue prodList = new ProductCatalogue(driver);
+		return prodList;
 	}
-	
-	public void goToURL()
-	{
+
+	public void goToURL() {
 		driver.get("https://rahulshettyacademy.com/client/");
+		driver.manage().window().maximize();
+
 	}
 
 }

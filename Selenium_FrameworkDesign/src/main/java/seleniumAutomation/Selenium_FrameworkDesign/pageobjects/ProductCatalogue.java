@@ -7,8 +7,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class ProductCatalogue {
+import seleniumAutomation.Selenium_FrameworkDesign.AbstractComponents.AbstractComponents;
+
+public class ProductCatalogue extends AbstractComponents {
 
 	// Create a constructor to declare and initialize driver
 	WebDriver driver;
@@ -16,6 +19,7 @@ public class ProductCatalogue {
 	public ProductCatalogue(WebDriver driver)
 
 	{
+		super(driver);
 		this.driver = driver;
 		PageFactory.initElements(driver, this); // This will initialize the driver and get the locator
 	}
@@ -23,5 +27,34 @@ public class ProductCatalogue {
 	// PageFactory Pattern to Login
 	@FindBy(css = ".mb-3")
 	List<WebElement> productList;
+
+	// Get Product List
+	By products = By.cssSelector(".mb-3");
+	By addToCart = By.cssSelector(".card-body button:last-of-type");
+	By toastMsg = By.cssSelector("#toast-container");
+
+	@FindBy(css = ".ng-animating")
+	WebElement ngAnimate;
+
+	public List<WebElement> getProductList() {
+		waitTillElementAppear(products);
+		return productList;
+	}
+
+	public WebElement getProductName(String productName) {
+		WebElement reqProduct = getProductList().stream()
+				.filter(product -> product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst()
+				.orElse(null);
+		return reqProduct;
+	}
+
+	public void addProductToCart(String productName) throws InterruptedException {
+		WebElement reqProd = getProductName(productName);
+		reqProd.findElement(addToCart).click();
+		waitTillElementAppear(toastMsg);
+		Thread.sleep(1000);
+		// waitTillElementDisapper(ngAnimate);
+
+	}
 
 }

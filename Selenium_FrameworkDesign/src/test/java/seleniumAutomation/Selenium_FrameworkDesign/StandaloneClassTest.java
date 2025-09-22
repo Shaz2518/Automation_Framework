@@ -12,70 +12,55 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import seleniumAutomation.Selenium_FrameworkDesign.pageobjects.CartPage;
+import seleniumAutomation.Selenium_FrameworkDesign.pageobjects.CheckoutPage;
+import seleniumAutomation.Selenium_FrameworkDesign.pageobjects.ConfirmationPage;
 import seleniumAutomation.Selenium_FrameworkDesign.pageobjects.LandingPage;
+import seleniumAutomation.Selenium_FrameworkDesign.pageobjects.ProductCatalogue;
 
 public class StandaloneClassTest {
 
-	public static void main(String[] args) {
-		
-		//Invoke browser and hit URL
+	public static void main(String[] args) throws InterruptedException {
+
+		// Invoke browser and hit URL
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver();
-		
+
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		driver.manage().window().maximize();
-		
-				
-		//Fill and Submit Login Form
+
+		String productName = "ZARA COAT 3";
+		// Fill and Submit Login Form
+
 		LandingPage landingPage = new LandingPage(driver);
 		landingPage.goToURL();
-		landingPage.loginApp("shaikh.shaziya@gmail.com", "Shaz@2518");
-		
-		//List all Products and add a particular product to cart
-		List<WebElement> productList = driver.findElements(By.cssSelector(".mb-3"));
-		
-		//Filter a product to be added.
-		String productName = "ZARA COAT 3";
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-		WebElement reqProduct = productList.stream().filter(product->
-		product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
-		
-		//Click on add to cart
-		reqProduct.findElement(By.cssSelector(".card-body button:last-of-type")).click();
-		
-		//Explicit wait for loading cart icon
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#toast-container")));
-		wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".ng-animating")));
-		
-		driver.findElement(By.cssSelector("[routerlink*='cart']")).click();
-		
-		//List of product added to Cart and match with Desired product
-		List<WebElement> cartProduct = driver.findElements(By.cssSelector(".cartSection h3"));
-		boolean match = cartProduct.stream().anyMatch(product->product.getText().equalsIgnoreCase(productName));
+		ProductCatalogue prodList = landingPage.loginApp("shaikh.shaziya@gmail.com", "Shaz@2518");
+
+		// List all Products and add a particular product to cart
+		List<WebElement> productList = prodList.getProductList();
+
+		// Filter a product to be added.
+		prodList.addProductToCart(productName);
+
+		// Cart Page
+		CartPage cart = prodList.goToCart();
+
+		// List of product added to Cart and match with Desired product
+		Boolean match = cart.verifyProductName(productName);
 		Assert.assertTrue(match);
-		
-		//Click checkout and wait
-		driver.findElement(By.cssSelector(".totalRow button")).click();
-		
-		//Select India in Country dropdown
-		driver.findElement(By.xpath("//input[@placeholder='Select Country']")).sendKeys("IND");
-		driver.findElement(By.xpath("//span[text()=' India']")).click();
-		driver.findElement(By.cssSelector(".btnn")).click();
-		
-		//Compare Final Order message
-		String checkoutMessage = driver.findElement(By.cssSelector(".hero-primary")).getText();
-		boolean text = checkoutMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER.");
-		Assert.assertTrue(text);
-		driver.close();
-		
-		
-		
-		
-		
-		
-		
-		
+
+		// Click checkout and wait
+		CheckoutPage checkoutPage = cart.checkOutElement();
+
+		// Select India in Country dropdown
+		checkoutPage.selectCountryName();
+		ConfirmationPage confirmPage = checkoutPage.submitOrder();
+
+		// Compare Final Order message
+
+		String confirmMsg = confirmPage.checkoutPageMessage();
+		boolean finalMessage = confirmMsg.equalsIgnoreCase("THANKYOU FOR THE ORDER.");
+		Assert.assertTrue(finalMessage);
+		// driver.close();
 
 	}
 
