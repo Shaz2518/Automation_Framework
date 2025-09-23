@@ -1,0 +1,55 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+import seleniumAutomation.Selenium_FrameworkDesign.AbstractComponents.AbstractComponents;
+
+public class ProductCatalogue extends AbstractComponents {
+
+	// Create a constructor to declare and initialize driver
+	WebDriver driver;
+
+	public ProductCatalogue(WebDriver driver)
+
+	{
+		super(driver);
+		this.driver = driver;
+		PageFactory.initElements(driver, this); // This will initialize the driver and get the locator
+	}
+
+	// PageFactory Pattern to Login
+	@FindBy(css = ".mb-3")
+	List<WebElement> productList;
+	
+	//Get Product List
+	By products = By.cssSelector(".mb-3");
+	By addToCart = By.cssSelector(".card-body button:last-of-type");
+	
+	public List<WebElement> getProductList()
+	{
+		waitTillElementAppear(products);
+		return productList;
+	}
+	
+	public WebElement getProductName(String productName)
+	{
+		WebElement reqProduct = getProductList().stream().filter(product->
+		product.findElement(By.cssSelector("b")).getText().equals(productName)).findFirst().orElse(null);
+		return reqProduct;
+	}
+	
+	public void addProductToCart(String productName)
+	{
+		WebElement reqProd = getProductName(productName);
+		reqProd.click();
+	}
+	
+	
+
+}

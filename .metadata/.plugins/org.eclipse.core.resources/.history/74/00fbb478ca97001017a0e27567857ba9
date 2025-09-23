@@ -1,0 +1,54 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+import java.util.List;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+
+import seleniumAutomation.Selenium_FrameworkDesign.AbstractComponents.AbstractComponents;
+
+public class CheckoutPage extends AbstractComponents {
+	
+	WebDriver driver;
+	public CheckoutPage(WebDriver driver) {
+		super(driver);
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+
+	
+	@FindBy(xpath = "//input[@placeholder='Select Country']")
+	WebElement countryName;
+
+	@FindBy(xpath = "//span[text()=' India']")
+	WebElement selectCountry;
+	
+	@FindBy(css = ".btnn")
+	WebElement submitBtn;
+	
+	@FindBy(css=".hero-primary")
+	WebElement checkoutMessage;
+
+	//Select country from Dropdown
+	public ConfirmationPage selectCountryName() {
+		countryName.sendKeys("IND");
+		selectCountry.click();
+		submitBtn.click();
+		ConfirmationPage confirmPage = new ConfirmationPage(driver);
+		return confirmPage;
+		
+	}
+
+	public Boolean checkoutPageMessag(String message)
+	{
+		checkoutMessage.gett
+	}
+	String  = driver.findElement(By.cssSelector()).getText();
+	boolean text = checkoutMessage.equalsIgnoreCase("THANKYOU FOR THE ORDER.");
+	
+	
+}

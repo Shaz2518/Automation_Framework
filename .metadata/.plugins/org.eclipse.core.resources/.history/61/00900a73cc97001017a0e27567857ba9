@@ -1,0 +1,47 @@
+package seleniumAutomation.Selenium_FrameworkDesign.pageobjects;
+
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+
+import seleniumAutomation.Selenium_FrameworkDesign.AbstractComponents.AbstractComponents;
+
+public class CheckoutPage extends AbstractComponents {
+	
+	WebDriver driver;
+	public CheckoutPage(WebDriver driver) {
+		super(driver);
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+
+	
+	@FindBy(xpath = "//input[@placeholder='Select Country']")
+	WebElement countryName;
+
+	@FindBy(xpath = "//span[text()=' India']")
+	WebElement selectCountry;
+	
+	@FindBy(css = ".btnn")
+	WebElement submitBtn;
+	
+	@FindBy(css=".hero-primary")
+	WebElement checkoutMessage;
+
+	//Select country from Dropdown
+	public void selectCountryName() {
+		countryName.sendKeys("IND");
+		selectCountry.click();
+		
+		}
+	public ConfirmationPage submitOrder()
+	{
+		submitBtn.click();
+		ConfirmationPage confirmPage = new ConfirmationPage(driver);
+		return confirmPage;
+	}
+	
+}
